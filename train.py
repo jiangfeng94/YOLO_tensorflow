@@ -63,7 +63,7 @@ class Solver(object):
 					log_str =('{} Epoch:{},step:{},Learning rate:{},'
 						'Loss:{:5.3f}\nSpeed:{:.3f}s/iter,'
 						'Load:{:.3f}s/iter,Remain:{}').format(
-						datetime.datetime.now().strftime(%m/%d %H:%M:%S''),
+						datetime.datetime.now().strftime('%m/%d %H:%M:%S'),
 						self.data.epoch,
 						int(step),
 						round(self.learning_rate.eval(session=self.sess),6),
@@ -118,5 +118,5 @@ def main():
 	solver.train()
 	print('Done training')
 
-if  __name__ ='__main__':
+if  __name__ =='__main__':
 	main()
