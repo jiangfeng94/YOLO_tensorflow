@@ -1,6 +1,7 @@
 import tensorflow as tf
 import datetime
 import argparse
+import os
 import yolo.config as cfg
 from yolo.yolo_net import YOLONet
 from utils.timer import Timer
