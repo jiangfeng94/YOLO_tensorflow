@@ -47,7 +47,7 @@ class YOLONet(object):
                       keep_prob=0.5,
                       is_training=True,
                       scope='yolo'):
-        with tf.variable_scope(scope):
+        with tf.variable_scope(scope,reuse=True):
             with slim.arg_scope([slim.conv2d, slim.fully_connected],
                                 activation_fn=leaky_relu(alpha),
                                 weights_initializer=tf.truncated_normal_initializer(0.0, 0.01),
@@ -100,7 +100,7 @@ class YOLONet(object):
         Return:
           iou: 3-D tensor [CELL_SIZE, CELL_SIZE, BOXES_PER_CELL]
         """
-        with tf.variable_scope(scope):
+        with tf.variable_scope(scope,reuse=True):
             boxes1 = tf.stack([boxes1[:, :, :, :, 0] - boxes1[:, :, :, :, 2] / 2.0,
                                boxes1[:, :, :, :, 1] - boxes1[:, :, :, :, 3] / 2.0,
                                boxes1[:, :, :, :, 0] + boxes1[:, :, :, :, 2] / 2.0,
@@ -132,7 +132,7 @@ class YOLONet(object):
         return tf.clip_by_value(inter_square / union_square, 0.0, 1.0)
 
     def loss_layer(self, predicts, labels, scope='loss_layer'):
-        with tf.variable_scope(scope):
+        with tf.variable_scope(scope,reuse=True):
             predict_classes = tf.reshape(predicts[:, :self.boundary1], [self.batch_size, self.cell_size, self.cell_size, self.num_class])
             predict_scales = tf.reshape(predicts[:, self.boundary1:self.boundary2], [self.batch_size, self.cell_size, self.cell_size, self.boxes_per_cell])
             predict_boxes = tf.reshape(predicts[:, self.boundary2:], [self.batch_size, self.cell_size, self.cell_size, self.boxes_per_cell, 4])

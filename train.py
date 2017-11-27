@@ -71,12 +71,13 @@ class Solver(object):
 						loss,
 						train_timer.average_time,
 						load_timer.arverage_time,
-						trian_timer.remain(step,self.max_iter))
+						train_timer.remain(step,self.max_iter))
+					print(log_str)
 				else:
 					train_timer.tic()
 					summary_str,_ =self.sess.run([self.summary_op,self.train_op],feed_dict =feed_dict)
 					train_timer .toc()
-				self.writer.add_summary(summary_str,setp)
+				self.writer.add_summary(summary_str,step)
 			else:
 				train_timer.tic()
 				self.sess.run(self.train_op,feed_dict =feed_dict)
